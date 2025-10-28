@@ -1,0 +1,13 @@
+# DevOps Casestudy/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: bmi-service
+spec:
+  selector:
+    app: bmi
+  ports:
+    - port: 80
+      targetPort: 5000
+      protocol: TCP
+  type: ClusterIP

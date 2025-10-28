@@ -1,0 +1,38 @@
+<!-- DevOps Casestudy/templates/history.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BMI History</title>
+  <style>
+    body{font-family: Arial, Helvetica, sans-serif; max-width:900px;margin:20px auto;}
+    table{border-collapse:collapse;width:100%}
+    th,td{padding:8px;border:1px solid #ddd;text-align:left}
+    th{background:#f7f7f7}
+  </style>
+</head>
+<body>
+  <a href="/">← Back to Calculator</a>
+  <h1>BMI Calculation History</h1>
+  {% if rows|length == 0 %}
+    <p>No history yet.</p>
+  {% else %}
+    <table>
+      <thead>
+        <tr><th>When (UTC)</th><th>Weight (kg)</th><th>Height (cm)</th><th>BMI</th><th>Category</th></tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r['created_at'] }}</td>
+          <td>{{ r['weight'] }}</td>
+          <td>{{ r['height'] }}</td>
+          <td>{{ r['bmi'] }}</td>
+          <td>{{ r['category'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</body>
+</html>

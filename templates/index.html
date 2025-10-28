@@ -1,0 +1,46 @@
+<!-- DevOps Casestudy/templates/index.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BMI Calculator</title>
+  <style>
+    body{font-family: Arial, Helvetica, sans-serif; max-width:760px;margin:20px auto;padding:10px}
+    label{display:block; margin:8px 0}
+    .result{background:#f0f0f0;padding:12px;border-radius:6px;margin-top:12px}
+    .error{color:#a00}
+    nav{margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <nav><a href="/">Calculator</a> | <a href="/history">History</a></nav>
+  <h1>BMI Calculator</h1>
+
+  <form method="post" id="bmiForm">
+    <label>
+      Weight (kg):
+      <input type="number" step="0.1" name="weight" required>
+    </label>
+    <label>
+      Height (cm):
+      <input type="number" step="0.1" name="height_cm" required>
+    </label>
+    <button type="submit">Calculate</button>
+  </form>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  {% if result %}
+    <div class="result">
+      <p><strong>Weight:</strong> {{ result.weight }} kg</p>
+      <p><strong>Height:</strong> {{ result.height }} cm</p>
+      <p><strong>BMI:</strong> {{ result.bmi }}</p>
+      <p><strong>Category:</strong> {{ result.category }}</p>
+    </div>
+  {% endif %}
+
+  <footer style="margin-top:18px;color:#666">Stored results are kept in a local SQLite DB inside the container (ephemeral unless PV is used).</footer>
+</body>
+</html>
