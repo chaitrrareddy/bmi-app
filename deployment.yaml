@@ -1,51 +1,19 @@
-# DevOps Casestudy/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bmi-app
-  labels:
-    app: bmi
+  name: bmi-app-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: bmi
+      app: bmi-app
   template:
     metadata:
       labels:
-        app: bmi
+        app: bmi-app
     spec:
       containers:
-        - name: bmi
-          image: chaitrrareddy/bmi-app:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5000
-          env:
-            - name: SQLITE_DB
-              value: "/data/bmi_history.db"
-          volumeMounts:
-            - name: data-volume
-              mountPath: /data
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5000
-            initialDelaySeconds: 20
-            periodSeconds: 20
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 5000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-      volumes:
-        - name: data-volume
-          emptyDir: {}
+      - name: bmi-app
+        image: chaitrrareddy/bmi-app:latest
+        ports:
+        - containerPort: 5000
