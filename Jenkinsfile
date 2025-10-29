@@ -15,7 +15,7 @@ pipeline{
         stage("push Docker Iamge to Docker Hub"){
             steps {
                 echo "push Docker Image to docker hub"
-                bat "docker tag chaitrrareddy/bmi-app:latest"
+                bat "docker tag bmi-app:latest"
                 bat "docker push chaitrrareddy/bmi-app"
 
 
