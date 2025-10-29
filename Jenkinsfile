@@ -1,41 +1,40 @@
-pipeline {
+pipeline{
     agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                echo "🔧 Building Docker Image"
-                bat """
-                docker build -t bmi-app .
-                """
+    stages{
+        stage ("Build Docker Image"){
+            steps{
+                echo "Build Docker Image"
+                bat "docker build -t kubeapp:v2 ."
             }
         }
-
-        stage('Run') {
+        stage ("Docker Login"){
+            steps{
+                bat "docker login -u chaitrrareddy -p @Mcr_0205"
+            }
+        }
+        stage("push Docker Iamge to Docker Hub"){
             steps {
-                echo "🚀 Running Docker Container"
+                echo "push Docker Image to docker hub"
+                bat "docker tag kubeapp:v2 chaitrrareddy/bmi-app:latest"
+                bat "docker push chaitrrareddy/bmi-app:latest"
 
-                // Stop and remove old container if it exists
-                bat """
-                docker ps -a -q -f name=mycontainer > tmp.txt
-                for /f %%i in (tmp.txt) do docker rm -f %%i
-                del tmp.txt
-                """
 
-                // Run new container
-                bat """
-                docker run -d -p 5000:5000 --name mycontainer bmi-app
-                """
+            }
+        }
+        stage("Deploy to Kubernetes"){
+            steps{
+                bat "kubectl apply -f deployment.yaml --validate=false"
+                bat "kubectl apply -f service.yaml"
             }
         }
     }
+    post{
+        success{
+            echo 'Pipeline completed scucessfull!'
 
-    post {
-        success {
-            echo '✅ Pipeline completed successfully!'
         }
-        failure {
-            echo '❌ Pipeline failed. Please check the logs.'
+        failure{
+            echo "Pipeline failed.Please check the logs."
         }
     }
 }
