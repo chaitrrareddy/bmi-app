@@ -1,19 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bmi-app-deployment
+  name: kubeapp-deployment
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
-      app: bmi-app
+      app: kubeapp
   template:
     metadata:
       labels:
-        app: bmi-app
+        app: kubeapp
     spec:
       containers:
-      - name: bmi-app
+      - name: kubeapp
         image: chaitrrareddy/bmi-app:latest
+
         ports:
+
         - containerPort: 5000
