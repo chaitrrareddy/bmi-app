@@ -1,13 +1,13 @@
-# DevOps Casestudy/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: bmi-service
+  name: kubeapp-service
 spec:
   selector:
-    app: bmi
+    app: kubeapp
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 5000
       targetPort: 5000
-      protocol: TCP
-  type: ClusterIP
+      nodePort: 30089
+  type: NodePort
